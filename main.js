@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+// import * as THREE from 'three';
 
 // Création de la scène
 var scene = new THREE.Scene();
@@ -12,9 +12,34 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+
+let loader = new THREE.GLTFLoader();
+// Chargement du modèle
+let object = new THREE.Object3D();
+loader.load(
+  'hache.gltf', // Chemin du fichier
+  function (object) {
+    // Callback appelé lorsque le modèle est chargé
+    
+    // Vous pouvez appliquer des transformations au modèle ici si nécessaire
+    object.position.set(0,5,0);
+    // object.setSize(50,50);
+    // Ajout du modèle à la scène
+    scene.add(object);
+  },
+  function (xhr) {
+    // Callback pour la progression du chargement
+    console.log((xhr.loaded / xhr.total) * 100 + '% chargé');
+  },
+  function (error) {
+    // Callback en cas d'erreur de chargement
+    console.error('Erreur lors du chargement du modèle', error);
+  }
+);
+
 // Création d'un cube
-var geometry = new THREE.BoxGeometry(1, 1, 5);
-var geometry2 = new THREE.BoxGeometry(1, 1, 5);
+var geometry = new THREE.BoxGeometry(0.2, 0.2, 0.5);
+var geometry2 = new THREE.BoxGeometry(0.3, 0.3, 0.5);
 var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 var material2 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 var cube = new THREE.Mesh(geometry, material);
@@ -38,3 +63,5 @@ function animate() {
   
   // Appel de la fonction animate pour lancer l'animation
   animate();
+
+
